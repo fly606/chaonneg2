@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+    <meta name="theme-color" content="#0b1020" />
+    <title>洗掉世界的灰</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="./script.js"></script>
+  </head>
+  <body>
+    <main id="app" aria-label="洗掉世界的灰 H5互动游戏">
+      <canvas id="particleCanvas" aria-hidden="true"></canvas>
+      <div class="sound-toggle" id="soundToggle" role="button" tabindex="0" aria-label="开启或关闭声音">声波 OFF</div>
+      <nav class="page-dots" id="pageDots" aria-label="页面进度"></nav>
+
+      <section class="scene scene-1 active" data-scene="0">
+        <div class="bg gray-city parallax"><div class="shirt-sky"></div><div class="city-silhouette"></div></div>
+        <div class="breathing-shirt"></div>
+        <div class="petal petal-green"></div>
+        <div class="copy center-copy">
+          <p class="eyebrow">01 / 灰色世界入口</p>
+          <h1>世界，<br />好像很久没被洗过了。</h1>
+        </div>
+        <button class="hotspot cloth-corner" data-action="enterFiber" aria-label="触摸衣角">
+          <span>触摸衣角</span>
+          <i>☝</i>
+        </button>
+      </section>
+
+      <section class="scene scene-2" data-scene="1">
+        <div class="bg fiber-canyon parallax"><div class="fiber-strands"></div><div class="glow-flora"></div></div>
+        <div class="copy top-left">
+          <p class="eyebrow">02 / 坠入纤维峡谷</p>
+          <h2>每一根纤维，<br />都藏着一座花园。</h2>
+          <p class="hint">左右滑动探索 · 触碰花朵绽放香气</p>
+        </div>
+        <div class="drag-layer" id="fiberDrag" aria-label="可左右拖拽的纤维峡谷">
+          <button class="flower-bloom f1" aria-label="触碰花朵">✦</button>
+          <button class="flower-bloom f2" aria-label="触碰花朵">✦</button>
+          <button class="flower-bloom f3" aria-label="触碰花朵">✦</button>
+        </div>
+      </section>
+
+      <section class="scene scene-3" data-scene="2">
+        <div class="bg wring-sky parallax"><div class="cracked-earth"></div></div>
+        <div class="twist-cloud" id="twistCloud"></div>
+        <div class="copy top-center">
+          <p class="eyebrow">03 / 拧干天空</p>
+          <h2>把天空拧干</h2>
+          <p class="hint">双指旋转拧动云朵</p>
+        </div>
+        <div class="gold-stream" id="goldStream"></div>
+      </section>
+
+      <section class="scene scene-4" data-scene="3">
+        <div class="bg flower-world parallax"></div>
+        <canvas id="eraseCanvas" class="erase-canvas" aria-label="擦除灰尘和水雾"></canvas>
+        <div class="copy top-center above">
+          <p class="eyebrow">04 / 洗掉烦恼</p>
+          <h2>擦掉它们</h2>
+        </div>
+        <p class="revealed-line" id="revealedLine">洗净的，不只是衣服。</p>
+      </section>
+
+      <section class="scene scene-5" data-scene="4">
+        <div class="bg wardrobe-world parallax"></div>
+        <div class="copy top-left">
+          <p class="eyebrow">05 / 巨型衣柜迷宫</p>
+          <h2>每件衣服，<br />都藏着一种生活气味。</h2>
+          <p class="hint">点击任意衣服，释放花香风暴</p>
+        </div>
+        <div class="wardrobe" id="wardrobe">
+          <button class="garment white" data-scent="白鸢尾">白鸢尾</button>
+          <button class="garment pink" data-scent="玫瑰">玫瑰</button>
+          <button class="garment gold" data-scent="白兰">白兰</button>
+          <button class="garment purple" data-scent="晚香玉">晚香玉</button>
+        </div>
+      </section>
+
+      <section class="scene scene-6" data-scene="5">
+        <div class="bg void-world parallax"></div>
+        <div class="copy top-center">
+          <p class="eyebrow">06 / 摇醒香气</p>
+          <h2>试着摇醒它</h2>
+          <p class="hint">摇晃手机，或点击外套模拟摇一摇</p>
+        </div>
+        <button class="floating-coat" id="shakeCoat" aria-label="摇醒香气">
+          <span></span>
+        </button>
+        <p class="bottom-copy">有些香气，越靠近越苏醒。</p>
+      </section>
+
+      <section class="scene scene-7" data-scene="6">
+        <div class="bg machine-temple parallax"></div>
+        <div class="washer" id="washer"><div class="washer-door"></div></div>
+        <div class="copy top-center">
+          <p class="eyebrow">07 / 巨型洗衣机之门</p>
+          <h2>原来，你一直在洗整个世界。</h2>
+        </div>
+        <button class="hold-button" id="holdStart">长按启动</button>
+      </section>
+
+      <section class="scene scene-8" data-scene="7">
+        <div class="bg product-reveal parallax"></div>
+        <div class="liquid-drop"></div>
+        <div class="product-bottle" aria-label="超能植愈香氛洗衣液">
+          <div class="cap"></div><div class="label">超能<br />植愈香氛<br />洗衣液</div>
+        </div>
+        <div class="copy bottom-panel">
+          <p class="eyebrow">08 / 真相揭晓</p>
+          <h2>洗掉灰暗，<br />留下会开花的生活。</h2>
+          <p class="brand">超能植愈香氛洗衣液</p>
+        </div>
+      </section>
+
+      <section class="scene scene-9" data-scene="8">
+        <div class="bg card-garden parallax"></div>
+        <div class="copy top-center">
+          <p class="eyebrow">09 / 卖点解锁</p>
+          <h2>翻开香气卡牌</h2>
+        </div>
+        <div class="cards" id="cards">
+          <button class="card"><span class="front">花朵 + 精油滴</span><span class="back">10种天然植物精油</span></button>
+          <button class="card"><span class="front">巴黎花园剪影</span><span class="back">法国调香大师定制香氛</span></button>
+          <button class="card"><span class="front">旋转香气胶囊</span><span class="back">720小时持久留香</span></button>
+          <button class="card"><span class="front">摩擦衣物花朵爆开</span><span class="back">摩擦生香专利技术</span></button>
+        </div>
+      </section>
+
+      <section class="scene scene-10" data-scene="9">
+        <div class="bg result-garden parallax"></div>
+        <article class="poster" id="poster">
+          <p class="eyebrow">10 / 结局分享页</p>
+          <h2>你的衣服开出了：</h2>
+          <h1 id="personality">白鸢木檀花园人格</h1>
+          <p>你追求洁净，却更在意生活中的仪式感。你相信香气不是装饰，而是陪伴。你适合让日常，也拥有花开的时刻。</p>
+          <div class="recommend">
+            <strong>推荐产品</strong>
+            <span>超能植愈香氛洗衣凝珠</span>
+            <span>超能植愈香氛洗衣液</span>
+          </div>
+        </article>
+        <div class="actions">
+          <button id="savePoster">保存结果海报</button>
+          <button id="restart">再玩一次</button>
+          <button id="share">分享好友</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
